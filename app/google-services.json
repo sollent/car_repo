@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "809236741292",
+    "firebase_url": "https://avtoapp-be26b.firebaseio.com",
+    "project_id": "avtoapp-be26b",
+    "storage_bucket": "avtoapp-be26b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:809236741292:android:ac4cad66d8224f0dc77309",
+        "android_client_info": {
+          "package_name": "com.example.avto"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "809236741292-2tr2ge0r56fo2dqb97u76713vmgsvlng.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuA9C3h_DUNzhIEamdEVUDPTx0VRYZz44"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "809236741292-2tr2ge0r56fo2dqb97u76713vmgsvlng.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
