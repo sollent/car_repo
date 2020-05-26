@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    app:cnb_unselectedColor="#393939"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/home"
+        android:title="Главная"
+        android:icon="@drawable/ic_home_24px_outlined"
+        app:cnb_backgroundColor="#0D7ECA"
+        app:cnb_iconColor="#fff"
+        app:cnb_textColor="#fff"
+        />
+
+    <item
+        android:id="@+id/subscription"
+        android:title="Подписки"
+        android:icon="@drawable/ic_thumb_up_24px_outlined"
+        app:cnb_backgroundColor="#0D7ECA"
+        app:cnb_iconColor="#fff"
+        app:cnb_textColor="#fff"
+        />
+
+    <item
+        android:id="@+id/filters"
+        android:title="Профиль"
+        android:icon="@drawable/ic_person_outline_24px_outlined"
+        app:cnb_backgroundColor="#0D7ECA"
+        app:cnb_iconColor="#fff"
+        app:cnb_textColor="#fff"
+        />
+
+</menu>

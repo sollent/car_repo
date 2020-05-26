@@ -1,7 +1,6 @@
 package com.example.avto.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,16 +9,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
-import com.bumptech.glide.Glide;
-import com.example.avto.CarPostActivity;
 import com.example.avto.Interface.MainOnClick;
-import com.example.avto.MainActivity;
 import com.example.avto.Model.CarPost;
 import com.example.avto.R;
 import com.google.android.material.button.MaterialButton;
-import com.jakewharton.picasso.OkHttp3Downloader;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -76,26 +71,34 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         holder.txtDescription.setText(descriptionString);
         holder.price.setText(carPost.getCarInfo().getPrice().getByn().toString() + " BYN" + currencyPrefix + usdPrice + usdPrefix);
 
-        holder.moreAbout.setOnClickListener(new View.OnClickListener() {
+        String[] images = new String[1];
+        boolean existImage = true;
+
+        if (carPost.getImages() != null) {
+            images = new String[carPost.getImages().length + 1];
+            images[0] = carPost.getPreviewImage();
+
+            for (int i = 1; i < images.length; i++) {
+                images[i] = carPost.getImages()[i - 1];
+            }
+        } else if (carPost.getPreviewImage() != null) {
+            images[0] = carPost.getPreviewImage();
+        } else {
+            existImage = false;
+        }
+
+        if (existImage) {
+            ViewPagerAdapter adapter = new ViewPagerAdapter(context, images);
+            holder.viewPager.setAdapter(adapter);
+        }
+
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 clickListener.onOpenClick(position, carPost);
             }
         });
-
-        Glide
-                .with(holder.itemView)
-                .load("http://82.146.40.7/" + carPost.getPreviewImage())
-                .centerCrop()
-                .placeholder((R.drawable.image_spinner_animation))
-                .into(holder.coverImage);
-
-//        Picasso.Builder builder = new Picasso.Builder(context);
-//        builder.downloader(new OkHttp3Downloader(context));
-//        builder.build().load("http://82.146.40.7/" + carPost.getPreviewImage())
-//                .placeholder((R.drawable.image_spinner_animation))
-//                .error(R.drawable.def)
-//                .into(holder.coverImage);
     }
 
     @Override
@@ -110,15 +113,17 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         MaterialButton moreAbout;
         private ImageView coverImage;
 
+        ViewPager viewPager;
+
         CustomViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
 
-            moreAbout = mView.findViewById(R.id.moreAbout);
             txtTitle = mView.findViewById(R.id.title);
             txtDescription = mView.findViewById(R.id.description);
             price = mView.findViewById(R.id.price);
-            coverImage = mView.findViewById(R.id.coverImage);
+
+            viewPager = mView.findViewById(R.id.view_pager);
         }
     }
 }

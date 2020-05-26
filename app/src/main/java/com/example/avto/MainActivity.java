@@ -4,12 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
@@ -26,6 +28,8 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 import com.pusher.pushnotifications.PushNotifications;
 
 
@@ -37,7 +41,9 @@ public class MainActivity extends AppCompatActivity implements MainOnClick {
 
     GetDataService service;
 
-    FloatingActionButton updateBtn, filterButton;
+    ChipNavigationBar menu;
+
+    FloatingActionButton updateBtn, filterButton, subscriptionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +59,29 @@ public class MainActivity extends AppCompatActivity implements MainOnClick {
         progressDialog.setMessage("Загрузка....");
         progressDialog.show();
 
+        menu = findViewById(R.id.menu);
+        menu.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(int i) {
+                switch (i) {
+                    case R.id.home:
+
+                        break;
+                    case R.id.filters:
+                        Intent intent = new Intent(getApplicationContext(), FilterActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.subscription:
+                        Intent intent1 = new Intent(getApplicationContext(), SubscriptionActivity.class);
+                        startActivity(intent1);
+                        break;
+                }
+            }
+        });
+
         updateBtn = findViewById(R.id.updateBtn);
-        filterButton = findViewById(R.id.filterButton);
+//        filterButton = findViewById(R.id.filterButton);
+//        subscriptionButton = findViewById(R.id.subscriptionButton);
 
         updateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,13 +91,22 @@ public class MainActivity extends AppCompatActivity implements MainOnClick {
             }
         });
 
-        filterButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, FilterActivity.class);
-                startActivity(intent);
-            }
-        });
+
+//        subscriptionButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(MainActivity.this, SubscriptionActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+
+//        filterButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(MainActivity.this, FilterActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
         if (getIntent().getSerializableExtra("filter") != null) {
             SimpleFilterModel filterModel = (SimpleFilterModel) getIntent().getSerializableExtra("filter");
@@ -167,6 +203,7 @@ public class MainActivity extends AppCompatActivity implements MainOnClick {
         intent.putExtra("title", carPost.getTitle());
         intent.putExtra("description", carPost.getDescription());
         intent.putExtra("imageUrl", "http://82.146.40.7/" + carPost.getPreviewImage());
+//        intent.putExtra("imageUrl", "http://10.0.2.2:8000/" + carPost.getPreviewImage());
         intent.putExtra("mileageName", mileageName);
         intent.putExtra("mileage", carPost.getCarInfo().getMileage().toString());
         intent.putExtra("year", carPost.getCarInfo().getYear().toString());

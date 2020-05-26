@@ -52,26 +52,26 @@ public class SubscriptionsAdapter extends RecyclerView.Adapter<SubscriptionsAdap
         holder.model.setText(model);
         holder.generation.setText(generation);
 
-        holder.remove.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Call<ResultResponse> call = service.removeSubscription(dataList.get(position).getId());
-                call.enqueue(new Callback<ResultResponse>() {
-                    @Override
-                    public void onResponse(Call<ResultResponse> call, Response<ResultResponse> response) {
-                        SubscriptionActivity activity = (SubscriptionActivity) context;
-                        activity.enableDialog();
-                        activity.loadSubscriptions();
-                        activity.createToast("Подписка успешно удалена");
-                    }
-
-                    @Override
-                    public void onFailure(Call<ResultResponse> call, Throwable t) {
-                        Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
+//        holder.remove.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Call<ResultResponse> call = service.removeSubscription(dataList.get(position).getId());
+//                call.enqueue(new Callback<ResultResponse>() {
+//                    @Override
+//                    public void onResponse(Call<ResultResponse> call, Response<ResultResponse> response) {
+//                        SubscriptionActivity activity = (SubscriptionActivity) context;
+//                        activity.enableDialog();
+////                        activity.loadSubscriptions();
+//                        activity.createToast("Подписка успешно удалена");
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<ResultResponse> call, Throwable t) {
+//                        Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//            }
+//        });
     }
 
     @Override
@@ -92,9 +92,6 @@ public class SubscriptionsAdapter extends RecyclerView.Adapter<SubscriptionsAdap
             mark = mView.findViewById(R.id.mark);
             model = mView.findViewById(R.id.model);
             generation = mView.findViewById(R.id.generation);
-
-            edit = mView.findViewById(R.id.edit);
-            remove = mView.findViewById(R.id.remove);
         }
     }
 

@@ -1,7 +1,7 @@
 package com.example.avto;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
@@ -29,6 +29,8 @@ public class SubscriptionActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private SubscriptionsAdapter adapter;
     ProgressDialog progressDialog;
+
+
 
     GetDataService service;
 
@@ -85,8 +87,9 @@ public class SubscriptionActivity extends AppCompatActivity {
     private void generationSubscriptionsList(List<SubscriptionResponse> subscriptions) {
         recyclerView = findViewById(R.id.subscriptions_view);
         adapter = new SubscriptionsAdapter(this, subscriptions);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(SubscriptionActivity.this);
-        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+
+        GridLayoutManager manager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(manager);
     }
 }

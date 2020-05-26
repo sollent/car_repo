@@ -16,6 +16,8 @@ public class CarPost {
 
     private String previewImage;
 
+    private String[] images;
+
     public CarPost(Integer id, CarInfo carInfo, String title, String description, String sellerName, String[] sellerPhones, String previewImage) {
         this.id = id;
         this.carInfo = carInfo;
@@ -80,5 +82,13 @@ public class CarPost {
 
     public void setPreviewImage(String previewImage) {
         this.previewImage = previewImage;
+    }
+
+    public String[] getImages() {
+        return images;
+    }
+
+    public void setImages(String[] images) {
+        this.images = images;
     }
 }

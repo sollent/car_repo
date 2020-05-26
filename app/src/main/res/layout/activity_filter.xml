@@ -8,6 +8,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
+        android:background="@drawable/background"
         android:layout_height="wrap_content"
         tools:ignore="MissingConstraints">
 
@@ -20,35 +21,59 @@
             <com.jaredrummler.materialspinner.MaterialSpinner
                 android:id="@+id/spinner_mark"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:fontFamily="@font/nunito"
+                android:layout_height="60dp"/>
 
             <com.jaredrummler.materialspinner.MaterialSpinner
                 android:id="@+id/spinner_model"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/nunito"
+                android:background="@drawable/rounded_spinner"
+                android:layout_height="60dp"/>
 
             <com.jaredrummler.materialspinner.MaterialSpinner
                 android:id="@+id/spinner_generations"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:fontFamily="@font/nunito"
+                android:layout_marginTop="12dp"
+                android:layout_height="60dp"/>
 
-            <TableRow
-                android:id="@+id/tableRow1"
-                android:layout_width="fill_parent"
+<!--            <TableRow-->
+<!--                android:id="@+id/tableRow1"-->
+<!--                android:layout_width="fill_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="bottom"-->
+<!--                android:layout_marginTop="15dp" >-->
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_marginTop="15dp" >
+                android:gravity="bottom"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:orientation="horizontal"
+                android:baselineAligned="false">
 
                 <Button
+                    android:backgroundTint="@color/cardview_light_background"
                     android:id="@+id/filter_result"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/rounded_spinner"
+                    android:layout_marginTop="7dp"
+                    android:layout_alignParentBottom="true"
                     android:text="Найдено 0"
+                    android:fontFamily="@font/nunito"
                     android:textColor="@color/cardview_dark_background"
                     android:textSize="16dp"
                     app:backgroundTint="#D2D6E2"/>
 
-            </TableRow>
+            </LinearLayout>
+
+<!--            </TableRow>-->
 
         </LinearLayout>
 

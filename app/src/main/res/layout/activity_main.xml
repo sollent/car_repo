@@ -4,10 +4,68 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/tweets_recycler_view"
+    <com.ismaeldivita.chipnavigation.ChipNavigationBar
+        android:id="@+id/menu"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="72dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/rounded"
+        android:elevation="16dp"
+        android:padding="8dp"
+        app:cnb_menuResource="@menu/menu_bottom"
+        />
+
+    <ScrollView xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:background="@drawable/bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".SubscriptionActivity"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_marginTop="32dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Все автомобили"
+                    android:fontFamily="@font/nunito"
+                    android:textColor="@color/cardview_light_background"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/caption"
+                    android:layout_marginTop="6dp"
+                    android:fontFamily="@font/nunito"
+                    android:text="155 объявлений"
+                    android:textColor="#B5FFFFFF"
+                    android:textSize="14sp" />
+
+            </RelativeLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/tweets_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+
+        </LinearLayout>
+
+    </ScrollView>
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -19,21 +77,36 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_gravity="end|bottom"
-        android:backgroundTint="@color/design_default_color_primary"
-        app:backgroundTint="@color/design_default_color_primary"
-        android:layout_margin="16dp"/>
+        android:backgroundTint="#0D7ECA"
+        android:layout_marginBottom="85dp"
+        android:layout_marginRight="16dp"
+        app:backgroundTint="#0D7ECA" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/filterButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/filter"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_gravity="left|bottom"
-        android:backgroundTint="@color/cardview_light_background"
-        app:backgroundTint="@color/cardview_light_background"
-        android:layout_margin="16dp"/>
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/filterButton"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:src="@drawable/filter"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_alignParentLeft="true"-->
+<!--        android:layout_gravity="left|bottom"-->
+<!--        android:backgroundTint="@color/cardview_light_background"-->
+<!--        app:backgroundTint="@color/cardview_light_background"-->
+<!--        android:layout_margin="16dp"/>-->
+
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/subscriptionButton"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:src="@drawable/filter"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_alignParentLeft="true"-->
+<!--        android:layout_gravity="left|bottom"-->
+<!--        android:backgroundTint="@color/cardview_light_background"-->
+<!--        app:backgroundTint="@color/cardview_light_background"-->
+<!--        android:layout_marginBottom="85dp"-->
+<!--        android:layout_marginLeft="16dp"-->
+<!--        />-->
 
 </RelativeLayout>
 
