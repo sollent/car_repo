@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.avto.Adapter.SubscriptionsAdapter;
 import com.example.avto.Network.RetrofitClientInstance;
+import com.example.avto.Network.TokenService;
 import com.example.avto.Service.GetDataService;
 import com.example.avto.Service.Model.SubscriptionResponse;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -68,7 +69,7 @@ public class SubscriptionActivity extends AppCompatActivity {
     }
 
     public void loadSubscriptions() {
-        Call<List<SubscriptionResponse>> call = service.getSubscriptions();
+        Call<List<SubscriptionResponse>> call = service.getSubscriptions("Bearer " + TokenService.getToken(getApplicationContext()));
         call.enqueue(new Callback<List<SubscriptionResponse>>() {
             @Override
             public void onResponse(Call<List<SubscriptionResponse>> call, Response<List<SubscriptionResponse>> response) {

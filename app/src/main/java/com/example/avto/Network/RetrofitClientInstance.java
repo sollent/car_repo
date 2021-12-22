@@ -7,13 +7,13 @@ public class RetrofitClientInstance {
 
     private static Retrofit retrofit;
 
-    private static final String BASE_URL = "http://82.146.40.7";
+//    private static final String BASE_URL = "http://178.172.137.13:5555";
 //    private static final String BASE_URL = "http://10.0.2.2:8000";
 
     public static Retrofit getRetrofitIntance() {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
+                    .baseUrl(ApiBaseUrl.BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }

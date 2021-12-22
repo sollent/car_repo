@@ -11,12 +11,14 @@ import com.example.avto.Service.Model.ResultResponse;
 import com.example.avto.Service.Model.SimpleFilterModel;
 import com.example.avto.Service.Model.Subscription;
 import com.example.avto.Service.Model.SubscriptionResponse;
+import com.google.android.gms.common.util.Strings;
 
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
@@ -40,12 +42,12 @@ public interface GetDataService {
     @POST("/filter-count")
     Call<FilterCountResultModel> filterCount(@Body SimpleFilterModel body);
 
-    @POST("/subscription/create")
-    Call<SubscriptionResponse> createSubscription(@Body Subscription body);
+    @POST("/api/subscription/create")
+    Call<SubscriptionResponse> createSubscription(@Header("Authorization") String token, @Body Subscription body);
 
-    @GET("/subscription/show-all")
-    Call<List<SubscriptionResponse>> getSubscriptions();
+    @GET("/api/subscription/show-all")
+    Call<List<SubscriptionResponse>> getSubscriptions(@Header("Authorization") String token);
 
-    @DELETE("/subscription/remove/{subscriptionId}")
-    Call<ResultResponse> removeSubscription(@Path("subscriptionId") Integer subscriptionId);
+    @DELETE("/api/subscription/remove/{subscriptionId}")
+    Call<ResultResponse> removeSubscription(@Header("Authorization") String token, @Path("subscriptionId") Integer subscriptionId);
 }

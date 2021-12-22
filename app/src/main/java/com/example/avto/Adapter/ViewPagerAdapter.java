@@ -9,13 +9,14 @@ import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.bumptech.glide.Glide;
+import com.example.avto.Network.ApiBaseUrl;
 import com.example.avto.R;
 
 public class ViewPagerAdapter extends PagerAdapter {
     private Context context;
     private String[] imageUrls;
 
-    ViewPagerAdapter(Context context, String[] imageUrls) {
+    public ViewPagerAdapter(Context context, String[] imageUrls) {
         this.context = context;
         this.imageUrls = imageUrls;
     }
@@ -37,7 +38,7 @@ public class ViewPagerAdapter extends PagerAdapter {
 
         Glide
                 .with(context)
-                .load("http://82.146.40.7/" + imageUrls[position])
+                .load(ApiBaseUrl.BASE_URL + imageUrls[position])
                 .centerCrop()
                 .placeholder((R.drawable.image_spinner_animation))
                 .into(imageView);

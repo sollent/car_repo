@@ -4,23 +4,26 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.avto.Adapter.CustomAdapter;
 import com.example.avto.Interface.MainOnClick;
 import com.example.avto.Model.CarPost;
+import com.example.avto.Network.ApiBaseUrl;
 import com.example.avto.Network.RetrofitClientInstance;
+import com.example.avto.Network.TokenService;
+import com.example.avto.Service.AuthService;
 import com.example.avto.Service.GetDataService;
 import com.example.avto.Service.Model.SimpleFilterModel;
+import com.example.avto.Service.Model.UserModel;
+import com.google.android.gms.common.util.Strings;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -40,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements MainOnClick {
     ProgressDialog progressDialog;
 
     GetDataService service;
+    AuthService authService;
 
     ChipNavigationBar menu;
 
@@ -51,9 +55,10 @@ public class MainActivity extends AppCompatActivity implements MainOnClick {
         setContentView(R.layout.activity_main);
 
         service = RetrofitClientInstance.getRetrofitIntance().create(GetDataService.class);
+        authService = RetrofitClientInstance.getRetrofitIntance().create(AuthService.class);
 
         PushNotifications.start(getApplicationContext(), "58f8860e-65e3-4e17-9bd8-6419b9ae97f4");
-        PushNotifications.addDeviceInterest("sollent");
+        initialDeviceInterest();
 
         progressDialog = new ProgressDialog(MainActivity.this);
         progressDialog.setMessage("Загрузка....");
@@ -67,11 +72,15 @@ public class MainActivity extends AppCompatActivity implements MainOnClick {
                     case R.id.home:
 
                         break;
-                    case R.id.filters:
-                        Intent intent = new Intent(getApplicationContext(), FilterActivity.class);
+                    case R.id.profile:
+                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.subscription:
+                        if (Strings.isEmptyOrWhitespace(TokenService.getToken(getApplicationContext()))) {
+                            Toast.makeText(MainActivity.this, "Необходимо авторизоваться", Toast.LENGTH_SHORT).show();
+                            break;
+                        }
                         Intent intent1 = new Intent(getApplicationContext(), SubscriptionActivity.class);
                         startActivity(intent1);
                         break;
@@ -80,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements MainOnClick {
         });
 
         updateBtn = findViewById(R.id.updateBtn);
-//        filterButton = findViewById(R.id.filterButton);
+        filterButton = findViewById(R.id.filterButton);
 //        subscriptionButton = findViewById(R.id.subscriptionButton);
 
         updateBtn.setOnClickListener(new View.OnClickListener() {
@@ -100,13 +109,13 @@ public class MainActivity extends AppCompatActivity implements MainOnClick {
 //            }
 //        });
 
-//        filterButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(MainActivity.this, FilterActivity.class);
-//                startActivity(intent);
-//            }
-//        });
+        filterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, FilterActivity.class);
+                startActivity(intent);
+            }
+        });
 
         if (getIntent().getSerializableExtra("filter") != null) {
             SimpleFilterModel filterModel = (SimpleFilterModel) getIntent().getSerializableExtra("filter");
@@ -114,6 +123,24 @@ public class MainActivity extends AppCompatActivity implements MainOnClick {
         } else {
             loadCarPosts();
         }
+    }
+
+    private void initialDeviceInterest() {
+        Call<UserModel> call = authService.getUser("Bearer " + TokenService.getToken(getApplicationContext()));
+        call.enqueue(new Callback<UserModel>() {
+            @Override
+            public void onResponse(Call<UserModel> call, Response<UserModel> response) {
+                if (response.body() != null) {
+                    PushNotifications.addDeviceInterest(response.body().getUsername().toString());
+                    Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserModel> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "Ошибка с Pusher", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -202,7 +229,7 @@ public class MainActivity extends AppCompatActivity implements MainOnClick {
         intent.putExtra("id", carPost.getId());
         intent.putExtra("title", carPost.getTitle());
         intent.putExtra("description", carPost.getDescription());
-        intent.putExtra("imageUrl", "http://82.146.40.7/" + carPost.getPreviewImage());
+        intent.putExtra("imageUrl", ApiBaseUrl.BASE_URL + carPost.getPreviewImage());
 //        intent.putExtra("imageUrl", "http://10.0.2.2:8000/" + carPost.getPreviewImage());
         intent.putExtra("mileageName", mileageName);
         intent.putExtra("mileage", carPost.getCarInfo().getMileage().toString());
@@ -214,6 +241,27 @@ public class MainActivity extends AppCompatActivity implements MainOnClick {
         intent.putExtra("currencyPrefix", currencyPrefix);
         intent.putExtra("usdPrice", usdPrice);
         intent.putExtra("usdPrefix", usdPrefix);
+
+        String[] images = new String[1];
+        boolean existImage = true;
+
+        if (carPost.getImages() != null) {
+            images = new String[carPost.getImages().length + 1];
+            images[0] = carPost.getPreviewImage();
+
+            for (int i = 1; i < images.length; i++) {
+                images[i] = carPost.getImages()[i - 1];
+            }
+        } else if (carPost.getPreviewImage() != null){
+            images[0] = carPost.getPreviewImage();
+        } else {
+            existImage = false;
+        }
+
+        if (existImage) {
+            intent.putExtra("images", images);
+        }
+
         startActivity(intent);
     }
 }

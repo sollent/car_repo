@@ -15,6 +15,7 @@ import com.example.avto.Model.CarModels.CarGeneration;
 import com.example.avto.Model.CarModels.CarMark;
 import com.example.avto.Model.CarModels.CarModel;
 import com.example.avto.Network.RetrofitClientInstance;
+import com.example.avto.Network.TokenService;
 import com.example.avto.Service.GetDataService;
 import com.example.avto.Service.Model.Subscription;
 import com.example.avto.Service.Model.SubscriptionResponse;
@@ -54,7 +55,7 @@ public class CreateSubscriptionActivity extends AppCompatActivity {
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Call<SubscriptionResponse> call = service.createSubscription(subscription);
+                Call<SubscriptionResponse> call = service.createSubscription("Bearer " + TokenService.getToken(getApplicationContext()), subscription);
                 call.enqueue(new Callback<SubscriptionResponse>() {
                     @Override
                     public void onResponse(Call<SubscriptionResponse> call, Response<SubscriptionResponse> response) {
